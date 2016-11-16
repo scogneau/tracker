@@ -31,7 +31,7 @@ func NewSQLConnection(dbuser, dbPassword, dbName string) (Connection, error) {
 	return s, err
 }
 
-func (c Connection) doInTransaction(queryFunction func(tx *sql.Tx, parameters ...interface{}) (interface{}, error), params ...interface{}) (interface{}, error) {
+func (c Connection) DoInTransaction(queryFunction func(tx *sql.Tx, parameters ...interface{}) (interface{}, error), params ...interface{}) (interface{}, error) {
 	transaction, err := c.Begin()
 	defer transaction.Commit()
 	if err != nil {
@@ -46,6 +46,6 @@ func (c Connection) doInTransaction(queryFunction func(tx *sql.Tx, parameters ..
 	return result, err
 }
 
-func (c Connection) doWithoutTransaction(queryFunction func(c Connection, parameters ...interface{}) (interface{}, error), params ...interface{}) (interface{}, error) {
+func (c Connection) DoWithoutTransaction(queryFunction func(c Connection, parameters ...interface{}) (interface{}, error), params ...interface{}) (interface{}, error) {
 	return queryFunction(c, params)
 }

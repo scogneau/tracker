@@ -20,7 +20,7 @@ func TestReadFromDb(t *testing.T) {
 		return resultInt, nil
 	}
 
-	r, err := c.doWithoutTransaction(selectFnC, 1, 2)
+	r, err := c.DoWithoutTransaction(selectFnC, 1, 2)
 	if err != nil {
 		fmt.Println("Error ", err)
 	}
@@ -46,7 +46,7 @@ func TestReadFromDbWithParameters(t *testing.T) {
 		return resultInt, nil
 	}
 
-	r, err := c.doWithoutTransaction(selectFnC, 1, 2)
+	r, err := c.DoWithoutTransaction(selectFnC, 1, 2)
 	if err != nil {
 		fmt.Println("Error ", err)
 	}
@@ -73,7 +73,7 @@ func TestReadWithTransaction(t *testing.T) {
 
 	}
 
-	r, err := c.doInTransaction(selectFnC, 1, 2)
+	r, err := c.DoInTransaction(selectFnC, 1, 2)
 	if err != nil {
 		fmt.Println("Error ", err)
 	}
