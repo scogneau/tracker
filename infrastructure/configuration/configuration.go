@@ -10,57 +10,71 @@ import (
 )
 
 const (
-	dbHostKey  = "db.host"
-	dbPortKey  = "db.port"
-	dbNameKey  = "db.name"
-	webPortKey = "web.port"
+	dbHostKey     = "db.host"
+	dbPortKey     = "db.port"
+	dbNameKey     = "db.name"
+	dbUserKey     = "db.user"
+	dbPasswordKey = "db.password"
+	webPortKey    = "web.port"
 )
 
 //Conf contains configuration
-var Conf Configuration
+var c configuration
 
 func init() {
 	path := flag.String("c", "conf/tracker.conf", "Path of configuration file")
 	var err error
-	Conf, err = ReadConfiguration(*path)
+	c, err = readConfiguration(*path)
 	if err != nil {
 		panic(fmt.Sprintf("Error while reading configuration file :%s\n", err))
 	}
 }
 
 //Configuration contains configuration for application
-type Configuration struct {
-	Db         DbConfiguration
-	ServerPort int
+type configuration struct {
+	db         dbConfiguration
+	serverPort int
 }
 
 //DbConfiguration contains db configuration
-type DbConfiguration struct {
-	host string
-	port int
-	db   string
+type dbConfiguration struct {
+	host     string
+	port     int
+	db       string
+	user     string
+	password string
 }
 
-//GetHost return database host
-func (db DbConfiguration) GetHost() string {
-	return db.host
+//GetDbHost return database host
+func GetDbHost() string {
+	return c.db.host
 }
 
 //GetPort return dabase port
-func (db DbConfiguration) GetPort() int {
-	return db.port
+func GetPort() int {
+	return c.db.port
 }
 
-//getDatabase return database name
-func (db DbConfiguration) getDatabase() string {
-	return db.db
+//GetDatabase return database name
+func GetDatabase() string {
+	return c.db.db
 }
 
-//ReadConfiguration read configuration from file
-func ReadConfiguration(path string) (Configuration, error) {
+//GetDbUser return user use to connect to database
+func GetDbUser() string {
+	return c.db.user
+}
+
+//GetDbPassword return password use to connect to database
+func GetDbPassword() string {
+	return c.db.password
+}
+
+//readConfiguration read configuration from file
+func readConfiguration(path string) (configuration, error) {
 	file, err := os.Open(path)
 	if err != nil {
-		return Configuration{}, err
+		return configuration{}, err
 	}
 
 	rawConfiguration := make(map[string]string)
@@ -75,11 +89,14 @@ func ReadConfiguration(path string) (Configuration, error) {
 	}
 	webport, err := strconv.Atoi(rawConfiguration[webPortKey])
 	dbport, err := strconv.Atoi(rawConfiguration[dbPortKey])
-	return Configuration{
-		DbConfiguration{
-			host: rawConfiguration[dbHostKey],
-			port: dbport,
-			db:   rawConfiguration[dbNameKey],
+
+	return configuration{
+		dbConfiguration{
+			host:     rawConfiguration[dbHostKey],
+			port:     dbport,
+			db:       rawConfiguration[dbNameKey],
+			user:     rawConfiguration[dbUserKey],
+			password: rawConfiguration[dbPasswordKey],
 		},
 		webport,
 	}, err

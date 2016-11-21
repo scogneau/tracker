@@ -20,7 +20,7 @@ func (p People) String() string {
 
 //ReadPeopleByID read people with the given id from database
 func ReadPeopleByID(id int) (People, error) {
-	c, err := db.NewSQLConnection("seb", "seb", "tracker_test")
+	c, err := db.Connect()
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -7,7 +7,7 @@ import (
 )
 
 func TestReadFromDb(t *testing.T) {
-	c, err := NewSQLConnection("seb", "seb", "tracker_test")
+	c, err := newSQLConnection("seb", "seb", "tracker_test")
 	if err != nil {
 		t.Error(err)
 	}
@@ -32,7 +32,7 @@ func TestReadFromDb(t *testing.T) {
 }
 
 func TestReadFromDbWithParameters(t *testing.T) {
-	c, err := NewSQLConnection("seb", "seb", "tracker_test")
+	c, err := newSQLConnection("seb", "seb", "tracker_test")
 	if err != nil {
 		t.Error(err)
 	}
@@ -58,7 +58,7 @@ func TestReadFromDbWithParameters(t *testing.T) {
 }
 
 func TestReadWithTransaction(t *testing.T) {
-	c, err := NewSQLConnection("seb", "seb", "tracker_test")
+	c, err := newSQLConnection("seb", "seb", "tracker_test")
 	if err != nil {
 		t.Error(err)
 	}
