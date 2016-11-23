@@ -10,7 +10,7 @@ import (
 func TestReadPeopleById(t *testing.T) {
 
 	gopath := os.Getenv("GOPATH")
-	configuration.InitFromPath(gopath + "/src/github.com/scogneau/tracker/conf/tracker.conf")
+	configuration.InitFromPath(gopath + "/src/github.com/scogneau/tracker/conf/tracker-test.conf")
 
 	id := 1
 	p, err := ReadPeopleByID(id)

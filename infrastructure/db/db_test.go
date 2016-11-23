@@ -11,7 +11,7 @@ import (
 
 func initConfiguration() {
 	gopath := os.Getenv("GOPATH")
-	configuration.InitFromPath(gopath + "/src/github.com/scogneau/tracker/conf/tracker.conf")
+	configuration.InitFromPath(gopath + "/src/github.com/scogneau/tracker/conf/tracker-test.conf")
 }
 
 func TestReadFromDb(t *testing.T) {
