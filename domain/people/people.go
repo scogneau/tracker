@@ -18,6 +18,11 @@ func (p People) String() string {
 	return fmt.Sprintf("id %d lastname : %s firstname: %s\n", p.id, p.lastName, p.firstName)
 }
 
+//ToJSON return json string representing people
+func ToJSON(p People) string {
+	return fmt.Sprintf("{id:%d,firstname:%s,lastname:%s}", p.id, p.firstName, p.lastName)
+}
+
 //ReadPeopleByID read people with the given id from database
 func ReadPeopleByID(id int) (People, error) {
 	c, err := db.Connect()

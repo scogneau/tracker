@@ -2,7 +2,6 @@ package configuration
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"os"
 	"strconv"
@@ -21,10 +20,9 @@ const (
 //Conf contains configuration
 var c configuration
 
-func init() {
-	path := flag.String("c", "conf/tracker.conf", "Path of configuration file")
+func InitFromPath(path string) {
 	var err error
-	c, err = readConfiguration(*path)
+	c, err = readConfiguration(path)
 	if err != nil {
 		panic(fmt.Sprintf("Error while reading configuration file :%s\n", err))
 	}
@@ -68,6 +66,11 @@ func GetDbUser() string {
 //GetDbPassword return password use to connect to database
 func GetDbPassword() string {
 	return c.db.password
+}
+
+//GetWebPort return web server port
+func GetWebPort() int {
+	return c.serverPort
 }
 
 //readConfiguration read configuration from file

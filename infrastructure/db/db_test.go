@@ -3,11 +3,20 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"testing"
+
+	"github.com/scogneau/tracker/infrastructure/configuration"
 )
 
+func initConfiguration() {
+	gopath := os.Getenv("GOPATH")
+	configuration.InitFromPath(gopath + "/src/github.com/scogneau/tracker/conf/tracker.conf")
+}
+
 func TestReadFromDb(t *testing.T) {
-	c, err := newSQLConnection("seb", "seb", "tracker_test")
+	initConfiguration()
+	c, err := newSQLConnection(configuration.GetDbUser(), configuration.GetDbPassword(), configuration.GetDatabase())
 	if err != nil {
 		t.Error(err)
 	}
@@ -32,7 +41,8 @@ func TestReadFromDb(t *testing.T) {
 }
 
 func TestReadFromDbWithParameters(t *testing.T) {
-	c, err := newSQLConnection("seb", "seb", "tracker_test")
+	initConfiguration()
+	c, err := newSQLConnection(configuration.GetDbUser(), configuration.GetDbPassword(), configuration.GetDatabase())
 	if err != nil {
 		t.Error(err)
 	}
@@ -58,7 +68,8 @@ func TestReadFromDbWithParameters(t *testing.T) {
 }
 
 func TestReadWithTransaction(t *testing.T) {
-	c, err := newSQLConnection("seb", "seb", "tracker_test")
+	initConfiguration()
+	c, err := newSQLConnection(configuration.GetDbUser(), configuration.GetDbPassword(), configuration.GetDatabase())
 	if err != nil {
 		t.Error(err)
 	}
