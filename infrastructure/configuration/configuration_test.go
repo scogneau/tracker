@@ -7,7 +7,7 @@ import (
 
 func TestReadConfiguration(t *testing.T) {
 	gopath := os.Getenv("GOPATH")
-	c, err := readConfiguration(gopath + "/src/github.com/scogneau/tracker/conf/tracker-test.conf")
+	c, err := readConfiguration(gopath + "/src/github.com/scogneau/tracker/conf/sample.conf")
 
 	if err != nil {
 		t.Errorf("Read configuration failed : %s\n", err)
@@ -23,8 +23,8 @@ func TestReadConfiguration(t *testing.T) {
 	if c.db.db != "tracker_test" {
 		t.Errorf("Read database fail got %s expected %s\n", c.db.db, "tracker_test")
 	}
-	if c.db.user != "seb" {
-		t.Errorf("Read user fail got %s expected %s\n", c.db.user, "seb")
+	if c.db.user != "user" {
+		t.Errorf("Read user fail got %s expected %s\n", c.db.user, "user")
 	}
 	if c.db.password != "passw0rd" {
 		t.Errorf("Read password fail got %s expected %s\n", c.db.password, "passw0rd")

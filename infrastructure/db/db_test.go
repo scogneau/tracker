@@ -90,6 +90,6 @@ func TestReadWithTransaction(t *testing.T) {
 	}
 	if r != 1 {
 		intValue, _ := r.(int)
-		t.Errorf("SELECT 1 should return 1, got %d\n", intValue)
+		t.Errorf("SELECT count(*) from people where id= 1, got %d\n", intValue)
 	}
 }
