@@ -1,0 +1,9 @@
+language : go
+
+before script :
+  - sh sql/init-test-db.sh
+services:
+  - postgres
+
+before install :
+  - go get github.com/lib/pq
