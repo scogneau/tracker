@@ -2,7 +2,7 @@
 
 dbUser='user_test'
 dbPassword='passw0rd'
-dbName='tracker-test'
+dbName='trackertest'
 pgUser='postgres'
 createFile=false
 
