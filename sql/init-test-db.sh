@@ -1,5 +1,6 @@
 #/bin/bash
 
+set -ev
 dbUser='user_test'
 dbPassword='passw0rd'
 dbName='trackertest'
