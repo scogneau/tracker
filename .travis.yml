@@ -1,7 +1,7 @@
 language : go
 
 before script :
-  - sh sql/init-test-db.sh
+  - sh sql/init-test-db.sh -f
 services:
   - postgres
 
