@@ -24,18 +24,16 @@ while getopts u:p:n:d:f a
 psql -c "create user $dbUser with password '$dbPassword';" -U $pgUser
  psql -c "ALTER DATABASE $dbName owner to $dbUser;" -U $pgUser
 
-function createTravisFileConfiguration {
+
+
+if  [ "$createFile" = true ]
+then
   echo "db.host : 127.0.0.1" > conf/tracker-test.conf
   echo "db.port : 5432" >> conf/tracker-test.conf
   echo "db.name : $dbName" >> conf/tracker-test.conf
   echo "db.user : postgres" >> conf/tracker-test.conf
   echo "db.password : " >> conf/tracker-test.conf
   echo "web.port : 8080" >> conf/tracker-test.conf
-}
-
-if  [ "$createFile" = true ]
-then
-  createTravisFileConfiguration
 fi
 
 psql -f sql/create-schema.sql -d $dbName -U $pgUser
