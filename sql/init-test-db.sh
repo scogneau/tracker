@@ -1,4 +1,4 @@
-#/bin/sh
+#/bin/bash
 
 dbUser='user_test'
 dbPassword='passw0rd'
