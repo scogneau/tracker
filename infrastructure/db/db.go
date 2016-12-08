@@ -24,9 +24,15 @@ func checkErr(err error) {
 
 //NewSQLConnection create a connection to SQL database
 func newSQLConnection(dbuser, dbPassword, dbName string) (Connection, error) {
-	dbinfo := fmt.Sprintf("user=%s dbname=%s sslmode=disable",
-		dbuser, dbName)
-	log.Print(dbinfo)
+	var dbinfo string
+	if dbPassword == "" {
+		dbinfo = fmt.Sprintf("user=%s dbname=%s sslmode=disable",
+			dbuser, dbName)
+	} else {
+		dbinfo = fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
+			dbuser, dbPassword, dbName)
+	}
+
 	db, err := sql.Open("postgres", dbinfo)
 	log.Print(err)
 	s := Connection{db}
