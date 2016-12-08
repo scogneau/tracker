@@ -32,7 +32,7 @@ then
   echo "db.host : 127.0.0.1" > conf/tracker-test.conf
   echo "db.port : 5432" >> conf/tracker-test.conf
   echo "db.name : $dbName" >> conf/tracker-test.conf
-  echo "db.user : postgres" >> conf/tracker-test.conf
+  echo "db.user :  $pgUser" >> conf/tracker-test.conf
   echo "db.password : " >> conf/tracker-test.conf
   echo "web.port : 8080" >> conf/tracker-test.conf
 fi

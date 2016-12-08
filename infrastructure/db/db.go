@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"log"
 
 	//loading postgresql driver
 	_ "github.com/lib/pq"
@@ -16,7 +17,7 @@ type Connection struct {
 
 func checkErr(err error) {
 	if err != nil {
-		fmt.Println("Error", err)
+		log.Print("Error", err)
 		panic(err)
 	}
 }
@@ -26,6 +27,7 @@ func newSQLConnection(dbuser, dbPassword, dbName string) (Connection, error) {
 	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
 		dbuser, dbPassword, dbName)
 	db, err := sql.Open("postgres", dbinfo)
+	log.Print(err)
 	s := Connection{db}
 	return s, err
 }
