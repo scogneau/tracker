@@ -23,8 +23,8 @@ func TestReadConfiguration(t *testing.T) {
 	if c.db.db != "tracker_test" {
 		t.Errorf("Read database fail got %s expected %s\n", c.db.db, "tracker_test")
 	}
-	if c.db.user != "user" {
-		t.Errorf("Read user fail got %s expected %s\n", c.db.user, "user")
+	if c.db.user != "user_test" {
+		t.Errorf("Read user fail got %s expected %s\n", c.db.user, "user_test")
 	}
 	if c.db.password != "passw0rd" {
 		t.Errorf("Read password fail got %s expected %s\n", c.db.password, "passw0rd")
