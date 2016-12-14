@@ -16,7 +16,7 @@ func initConfiguration() {
 
 func TestReadFromDb(t *testing.T) {
 	initConfiguration()
-	c, err := newSQLConnection(configuration.GetDbUser(), configuration.GetDbPassword(), configuration.GetDatabase())
+	c, err := newSQLConnection(configuration.GetDbConnectionURL())
 	if err != nil {
 		t.Error(err)
 	}
@@ -42,7 +42,7 @@ func TestReadFromDb(t *testing.T) {
 
 func TestReadFromDbWithParameters(t *testing.T) {
 	initConfiguration()
-	c, err := newSQLConnection(configuration.GetDbUser(), configuration.GetDbPassword(), configuration.GetDatabase())
+	c, err := newSQLConnection(configuration.GetDbConnectionURL())
 	if err != nil {
 		t.Error(err)
 	}
@@ -69,7 +69,7 @@ func TestReadFromDbWithParameters(t *testing.T) {
 
 func TestReadWithTransaction(t *testing.T) {
 	initConfiguration()
-	c, err := newSQLConnection(configuration.GetDbUser(), configuration.GetDbPassword(), configuration.GetDatabase())
+	c, err := newSQLConnection(configuration.GetDbConnectionURL())
 	if err != nil {
 		t.Error(err)
 	}

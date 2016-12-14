@@ -22,26 +22,21 @@ func checkErr(err error) {
 	}
 }
 
-//NewSQLConnection create a connection to SQL database
-func newSQLConnection(dbuser, dbPassword, dbName string) (Connection, error) {
-	var dbinfo string
-	if dbPassword == "" {
-		dbinfo = fmt.Sprintf("user=%s dbname=%s sslmode=disable",
-			dbuser, dbName)
-	} else {
-		dbinfo = fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
-			dbuser, dbPassword, dbName)
-	}
-
-	db, err := sql.Open("postgres", dbinfo)
+func openConnection(param string) (Connection, error) {
+	db, err := sql.Open("postgres", param)
 	log.Print(err)
 	s := Connection{db}
 	return s, err
 }
 
+//newSQLConnection create a connection to SQL database
+func newSQLConnection(v string) (Connection, error) {
+	return openConnection(v)
+}
+
 //Connect create a database connection using configuration information
 func Connect() (Connection, error) {
-	return newSQLConnection(configuration.GetDbUser(), configuration.GetDbPassword(), configuration.GetDatabase())
+	return newSQLConnection(configuration.GetDbConnectionURL())
 }
 
 //DoInTransaction execute queryFunction in a transaction

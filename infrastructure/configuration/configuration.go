@@ -3,6 +3,7 @@ package configuration
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -14,12 +15,14 @@ const (
 	dbNameKey     = "db.name"
 	dbUserKey     = "db.user"
 	dbPasswordKey = "db.password"
+	dbEnvKey      = "db.env"
 	webPortKey    = "web.port"
 )
 
 //Conf contains configuration
 var c configuration
 
+//InitFromPath initialize configuration from path
 func InitFromPath(path string) {
 	var err error
 	c, err = readConfiguration(path)
@@ -31,6 +34,7 @@ func InitFromPath(path string) {
 //Configuration contains configuration for application
 type configuration struct {
 	db         dbConfiguration
+	dbEnv      string
 	serverPort int
 }
 
@@ -43,34 +47,32 @@ type dbConfiguration struct {
 	password string
 }
 
-//GetDbHost return database host
-func GetDbHost() string {
-	return c.db.host
-}
-
-//GetPort return dabase port
-func GetPort() int {
-	return c.db.port
-}
-
-//GetDatabase return database name
-func GetDatabase() string {
-	return c.db.db
-}
-
-//GetDbUser return user use to connect to database
-func GetDbUser() string {
-	return c.db.user
-}
-
-//GetDbPassword return password use to connect to database
-func GetDbPassword() string {
-	return c.db.password
-}
-
-//GetWebPort return web server port
+//GetWebPort return the port for web application
 func GetWebPort() int {
 	return c.serverPort
+}
+
+//GetDbConnectionURL return  a url to connect to postgresql from parameter or environment
+func GetDbConnectionURL() string {
+	var dbinfo string
+
+	if c.dbEnv != "" {
+		if containsDbConfiguration() {
+			log.Print("INFO - Configuration file contains environment setup , all others setup for db will be ignored (host,user,password,dbname,port)")
+		}
+		return os.Getenv(c.dbEnv)
+	} else if c.db.password == "" {
+		dbinfo = fmt.Sprintf("user=%s dbname=%s sslmode=disable",
+			c.db.user, c.db.db)
+	} else {
+		dbinfo = fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
+			c.db.user, c.db.password, c.db.db)
+	}
+	return dbinfo
+}
+
+func containsDbConfiguration() bool {
+	return c.db.db != "" || c.db.host != "" || c.db.password != "" || c.db.port != 0 || c.db.user != ""
 }
 
 //readConfiguration read configuration from file
@@ -101,6 +103,7 @@ func readConfiguration(path string) (configuration, error) {
 			user:     rawConfiguration[dbUserKey],
 			password: rawConfiguration[dbPasswordKey],
 		},
+		rawConfiguration[dbEnvKey],
 		webport,
 	}, err
 }
