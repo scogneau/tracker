@@ -1,22 +1,15 @@
-language : go
+language: go
 env:
-  -secure: "SXKiHKJJBzfZ+skdn0E/LyObDmzS0QQdmsOfOKvEnppURRpbKfLc7/q9Yo2uPOCN9MbL43N81NYgdQ+GxbaTeSVr6lpSI2yNkE4/rtxcZgQjMtpAKoy88SbHOjukmufhVXwb5Mm7AdgSc3kPfahj0rs1sVWdGOvNGyuWMMXhE0eDL7Mh+753KO6iBtddtFBEQFEAc0LsyJiGDqxbQSTJl3NawZn+MF3d/GUJgCSM40iW0CgGZIAFhgQJyoMBSx8XJSIhtLP21G7rQQAJTBK/7dUHWFNR8qAsqRZTQ64HkkIIj5qx0OGZZLuT5YU6i7FVrxUUdXxCic+RL2cKoxp3b6dAdBGAJuRPezkz/M2BrrlS8jUR2q/nmJP4pcecdP+iItPdxujG1/M5jqcC3y78zD+MSoXfcu9+JBVVpAPLGY2rRv57ORof/eaykaMHC2KgUfsIzF82lj/UlZnCZW5zgsmqTNwST+Dz1EtQYJ15g2IHXynwTx8lpYcR1/Gtoa+1AIJSqcmfaXNCJ85FITHx8h7q6c9rktxz2YGvODgexcr74Q08NY3xCmQ68+P8pVDIB1xg+sdUKFa+Z9beR8Af8s9XcVXHou09qKSaEokEpt79HrSCDgVoPlB2b64jF6LtDBAP59bU6BSyRUquVHZwrA/4tz+OXrR8Tcjk3Qtf58o="
-
-
-before_script :
-  - sh sql/init-test-db.sh -f
+  secure: SXKiHKJJBzfZ+skdn0E/LyObDmzS0QQdmsOfOKvEnppURRpbKfLc7/q9Yo2uPOCN9MbL43N81NYgdQ+GxbaTeSVr6lpSI2yNkE4/rtxcZgQjMtpAKoy88SbHOjukmufhVXwb5Mm7AdgSc3kPfahj0rs1sVWdGOvNGyuWMMXhE0eDL7Mh+753KO6iBtddtFBEQFEAc0LsyJiGDqxbQSTJl3NawZn+MF3d/GUJgCSM40iW0CgGZIAFhgQJyoMBSx8XJSIhtLP21G7rQQAJTBK/7dUHWFNR8qAsqRZTQ64HkkIIj5qx0OGZZLuT5YU6i7FVrxUUdXxCic+RL2cKoxp3b6dAdBGAJuRPezkz/M2BrrlS8jUR2q/nmJP4pcecdP+iItPdxujG1/M5jqcC3y78zD+MSoXfcu9+JBVVpAPLGY2rRv57ORof/eaykaMHC2KgUfsIzF82lj/UlZnCZW5zgsmqTNwST+Dz1EtQYJ15g2IHXynwTx8lpYcR1/Gtoa+1AIJSqcmfaXNCJ85FITHx8h7q6c9rktxz2YGvODgexcr74Q08NY3xCmQ68+P8pVDIB1xg+sdUKFa+Z9beR8Af8s9XcVXHou09qKSaEokEpt79HrSCDgVoPlB2b64jF6LtDBAP59bU6BSyRUquVHZwrA/4tz+OXrR8Tcjk3Qtf58o=
+before_script:
+- sh sql/init-test-db.sh -f
 services:
-  - postgresql
-
-before_install :
-  - go get github.com/lib/pq
-
-before_deploy:
-  - "echo 'web.port : 8080'> conf/tracker.conf
-  - "echo 'db.env:DATABASE_URL'">conf/tracker.conf
-
-  deploy:
-    provider:heroku
-    api_key:
-      secure:"MY ENCRYPTED API KEY"
-    branch:f/heroku
+- postgresql
+before_install:
+- go get github.com/lib/pq
+before_deploy: 'echo ''web.port : 8080''> conf/tracker.conf && echo ''db.env:DATABASE_URL''>conf/tracker.conf'
+deploy:
+  matrix:
+  - provider:heroku branch:f/heroku
+  api_key:
+    secure: gK5a+vsWvzwtkBzYocxWjxg030ZfGUwCozeg6e7VLfJ6/U9e/4f1/6JmdDAXJeVZ9o0HY4BvhFWc9tcOeAfv9/Xlp+e+Fceb4dt0cRh0De7xStFfw+uRjob15dC9ohLv+1TMlgKht5TGMt0+rCkxr7dRF3wL+2vvaHTyRqJ2IGNKYovD5vEZgVGZwAY13SNEGbFvJddngVFZCBK+k1GnLeLOBBa4fr5dI0eTAwnYr/yJmqtFB4zGTlALiKhbNZHDkuYhhHfZ/KidZJ0FV3z2ZYpWd4RG3LGON4YWLhaJADVN+l6z8W/RAh9mOV4BFCc4m96Yl7w8mTFBAiCCRtPTeAtRMF0REkLr80WkYDj3PsseZf5Gn5S4YVJAkH+nagBRqJbN08JcYOxeuUZAyvVrRHqmODm+h6HXYIswjPrZDoI9C8rvk+ncfhmOHUAMrtJXqG6aD3qg07s4qvWkXEgYtNICJ62ZKQOKz8ZAH+Y4lI7L2fDpGx1sjpg3dLVCtUg9DYat0JIE0E7j/VIt9cxBSG+HFne60xJfKCpePYVOZ3/ck/PeFn3V2zrn5BOdG3pgoNtkJi0FgNmsh7ogL6VL5JMuM1NTEB0y4LkYI1voxQcVShjER6emLxeb7Zr7TeF624EtN/JQXxYEawK3kSrECBd/HZ4XGiLqya1edvATNEg=
