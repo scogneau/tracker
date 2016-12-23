@@ -13,10 +13,9 @@ before_deploy: 'echo ''web.port : 8080''> conf/tracker.conf && echo ''db.env:DAT
 
 deploy:
   provider: 'heroku'
-  branches:
-    only:
-      - f/heroku
+  on: f/heroku
   api_key:
     secure: gK5a+vsWvzwtkBzYocxWjxg030ZfGUwCozeg6e7VLfJ6/U9e/4f1/6JmdDAXJeVZ9o0HY4BvhFWc9tcOeAfv9/Xlp+e+Fceb4dt0cRh0De7xStFfw+uRjob15dC9ohLv+1TMlgKht5TGMt0+rCkxr7dRF3wL+2vvaHTyRqJ2IGNKYovD5vEZgVGZwAY13SNEGbFvJddngVFZCBK+k1GnLeLOBBa4fr5dI0eTAwnYr/yJmqtFB4zGTlALiKhbNZHDkuYhhHfZ/KidZJ0FV3z2ZYpWd4RG3LGON4YWLhaJADVN+l6z8W/RAh9mOV4BFCc4m96Yl7w8mTFBAiCCRtPTeAtRMF0REkLr80WkYDj3PsseZf5Gn5S4YVJAkH+nagBRqJbN08JcYOxeuUZAyvVrRHqmODm+h6HXYIswjPrZDoI9C8rvk+ncfhmOHUAMrtJXqG6aD3qg07s4qvWkXEgYtNICJ62ZKQOKz8ZAH+Y4lI7L2fDpGx1sjpg3dLVCtUg9DYat0JIE0E7j/VIt9cxBSG+HFne60xJfKCpePYVOZ3/ck/PeFn3V2zrn5BOdG3pgoNtkJi0FgNmsh7ogL6VL5JMuM1NTEB0y4LkYI1voxQcVShjER6emLxeb7Zr7TeF624EtN/JQXxYEawK3kSrECBd/HZ4XGiLqya1edvATNEg=
+
 
 after_deploy: 'pwd && ls'
