@@ -1,2 +1,3 @@
 conf/tracker.conf
 conf/tracker-test.conf
+.docker_build/
