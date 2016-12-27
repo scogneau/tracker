@@ -13,7 +13,7 @@ import (
 func main() {
 	path := flag.String("c", "conf/tracker.conf", "Path of configuration file")
 	configuration.InitFromPath(*path)
-	fmt.Println("Test")
 	http.HandleFunc("/people/", rest.HandlePeopleRead)
+	fmt.Println("Starting tracker application")
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", configuration.GetWebPort()), nil))
 }
