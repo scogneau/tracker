@@ -12,6 +12,7 @@ import (
 
 func main() {
 	path := flag.String("c", "conf/tracker.conf", "Path of configuration file")
+	flag.Parse()
 	configuration.InitFromPath(*path)
 	http.HandleFunc("/people/", rest.HandlePeopleRead)
 	fmt.Println("Starting tracker application")
