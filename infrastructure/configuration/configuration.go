@@ -26,6 +26,7 @@ var c configuration
 func InitFromPath(path string) {
 	var err error
 	c, err = readConfiguration(path)
+	log.Info(fmt.Sprintf("Reading configuration from %s\n", path))
 	if err != nil {
 		panic(fmt.Sprintf("Error while reading configuration file :%s\n", err))
 	}
