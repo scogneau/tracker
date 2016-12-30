@@ -80,6 +80,7 @@ func containsDbConfiguration() bool {
 func readConfiguration(path string) (configuration, error) {
 	file, err := os.Open(path)
 	if err != nil {
+		log.Printf("Error configuration file %s\n", path)
 		return configuration{}, err
 	}
 
@@ -87,14 +88,15 @@ func readConfiguration(path string) (configuration, error) {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		t := scanner.Text()
+		log.Print(t)
 		if !strings.HasPrefix(t, "#") {
 			l := strings.Split(t, ":")
 			rawConfiguration[strings.TrimSpace(l[0])] = strings.TrimSpace(l[1])
 		}
 
 	}
-	fmt.Println(rawConfiguration)
-	fmt.Println(os.Getenv(rawConfiguration[dbEnvKey]))
+	log.Print(rawConfiguration)
+	log.Printf("Connecting to %s", os.Getenv(rawConfiguration[dbEnvKey]))
 
 	webport, err := strconv.Atoi(rawConfiguration[webPortKey])
 	dbport := 0
