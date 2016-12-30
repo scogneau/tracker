@@ -93,10 +93,16 @@ func readConfiguration(path string) (configuration, error) {
 		}
 
 	}
-	webport, err := strconv.Atoi(rawConfiguration[webPortKey])
-	dbport, err := strconv.Atoi(rawConfiguration[dbPortKey])
 	fmt.Println(rawConfiguration)
 	fmt.Println(os.Getenv(rawConfiguration[dbEnvKey]))
+
+	webport, err := strconv.Atoi(rawConfiguration[webPortKey])
+	dbport := 0
+	dbportString, ok := rawConfiguration[dbPortKey]
+	if ok {
+		dbport, err = strconv.Atoi(dbportString)
+	}
+
 	return configuration{
 		dbConfiguration{
 			host:     rawConfiguration[dbHostKey],
