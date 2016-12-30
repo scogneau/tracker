@@ -1,9 +1,16 @@
-language : go
-
-before_script :
-  - sh sql/init-test-db.sh -f
+language: go
+before_script:
+- sh sql/init-test-db.sh -f
 services:
-  - postgresql
+- postgresql
+before_install:
+- go get github.com/lib/pq
 
-before_install :
-  - go get github.com/lib/pq
+deploy:
+  provider: heroku
+  on: master
+  app: rocky-meadow-15531
+  api_key:
+    secure: eN1/IzETjZhfCB+/Sn/p8ppJvf2+IJ0JJGs9f8/5ZWHU/cw41HismtoASIzftKi+l7ftclJWlmrrYYinQeqekpCAMMgqM9Acti1FixsB5yYnmrEU6l0vqQRpnUMpVx+W8nBb1sVBhl2Amn4VyaCk+bZj8BoHZjAkeUkOlqF7vLMNQuAs6T8xJPbFRzjVRgqM1XYdbkOgvJdG34vkO9quwvhvVxZT8M2AQCoFdI0AF3aET6NoQpjVugwVkevuG/XwKU6Ej9uYy1MIHknaMvPpMza11lCqlRmPSaQ5x9Jfog3fdR1S9AHIu+t+jykrU7FIa6un5R5ZlvrfDKcWdJ4uKFPS6x8Yqqa4s/2Ya0k6F4N2198/yEHG/UQam7iy0USmDhaHcnc8fKKHg7ZoPLQUgGXgIF/m/CZNxMcX/WakRvmbMZ8PA6V7O/0UsKhxVGvmeIPsVTu3sRdDb34qzCZShutI0nyo/HcpJzCqQLjfs6EnF6GjBHg6yJ4YY3bcXfZh0JU2JS7bkhaLEKfeNdhJ6cHOfDSI0sjob5WCC19wvrv6emkBbYaaa0r0nFdKleBA2Qg1f0KZlXuNhU2y4sXS2NphxWMSMTqFoFcrufdyfDeHiUj4sdxAy7ANTKpH21vD5PUdScdrM75lWEIW53hKbzidW48NNkFex9zU3cXWHDs=
+
+after_deploy: more conf/tracker.conf

@@ -1,0 +1,16 @@
+{
+  "name": "Tracker",
+  "description": "Small api to track time",
+  "keywords": [
+    "go"
+  ],
+  "image": "heroku/go:1.6",
+  "mount_dir": "src/github.com/scogneau/tracker",
+  "website": "http://github.com/scogneau/tracker",
+  "repository": "http://github.com/scogneau/tracker",
+  "buildpacks": [
+  {
+    "url": "https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-go"
+  }
+]
+}

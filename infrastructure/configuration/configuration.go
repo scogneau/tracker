@@ -26,6 +26,7 @@ var c configuration
 func InitFromPath(path string) {
 	var err error
 	c, err = readConfiguration(path)
+	log.Printf("Reading configuration from %s\n", path)
 	if err != nil {
 		panic(fmt.Sprintf("Error while reading configuration file :%s\n", err))
 	}
@@ -79,6 +80,7 @@ func containsDbConfiguration() bool {
 func readConfiguration(path string) (configuration, error) {
 	file, err := os.Open(path)
 	if err != nil {
+		log.Printf("Error configuration file %s\n", path)
 		return configuration{}, err
 	}
 
@@ -86,14 +88,22 @@ func readConfiguration(path string) (configuration, error) {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		t := scanner.Text()
+		log.Print(t)
 		if !strings.HasPrefix(t, "#") {
 			l := strings.Split(t, ":")
 			rawConfiguration[strings.TrimSpace(l[0])] = strings.TrimSpace(l[1])
 		}
 
 	}
+	log.Print(rawConfiguration)
+	log.Printf("Connecting to %s", os.Getenv(rawConfiguration[dbEnvKey]))
+
 	webport, err := strconv.Atoi(rawConfiguration[webPortKey])
-	dbport, err := strconv.Atoi(rawConfiguration[dbPortKey])
+	dbport := 0
+	dbportString, ok := rawConfiguration[dbPortKey]
+	if ok {
+		dbport, err = strconv.Atoi(dbportString)
+	}
 
 	return configuration{
 		dbConfiguration{

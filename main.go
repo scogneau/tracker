@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
 
 	"github.com/scogneau/tracker/facade/rest"
 	"github.com/scogneau/tracker/infrastructure/configuration"
@@ -12,8 +14,15 @@ import (
 
 func main() {
 	path := flag.String("c", "conf/tracker.conf", "Path of configuration file")
+	flag.Parse()
 	configuration.InitFromPath(*path)
-	fmt.Println("Test")
 	http.HandleFunc("/people/", rest.HandlePeopleRead)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", configuration.GetWebPort()), nil))
+	fmt.Println("Starting tracker application")
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Print("No $PORT defined fallback to configuration")
+		port = strconv.Itoa(configuration.GetWebPort())
+	}
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
