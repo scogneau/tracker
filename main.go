@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/scogneau/tracker/auth"
 	"github.com/scogneau/tracker/facade/rest"
 	"github.com/scogneau/tracker/infrastructure/configuration"
 )
@@ -32,6 +33,8 @@ func main() {
 		}
 		io.Copy(writer, f)
 	})
+	http.HandleFunc("/GoogleLogin", auth.HandleGoogleLogin)
+	http.HandleFunc("/GoogleCallback", auth.HandleGoogleCallback)
 	http.HandleFunc("/people/", rest.HandlePeopleRead)
 	fmt.Println("Starting tracker application")
 
